@@ -1,3 +1,4 @@
+from about import show_about
 from tkinter import *
 import tkinter  as tk
 from tkinter import ttk,messagebox
@@ -5,6 +6,7 @@ from datetime import datetime
 from datetime import datetime
 import requests
 from history import save_history, show_history
+from suggestions import get_suggestion
 
 
 root = Tk()
@@ -50,6 +52,8 @@ def getWeather():
     
     t.config(text=f"{temp}°")
     c.config(text=f"{condition} | FEELS LIKE {temp}°")
+    suggestion = get_suggestion(temp)
+    suggestion_label.config(text=suggestion)
     w.config(text=f"{wind} mph")
     h.config(text=f"{humidity}%")
     p.config(text=f"{pressure} in")
@@ -126,5 +130,19 @@ history_button = Button(
 )
 
 history_button.place(x=760, y=60)
+suggestion_label = Label(
+    root,
+    font=("arial", 12, "italic"),
+    fg="blue"
+)
+suggestion_label.place(x=400, y=280)
+about_button = Button(
+    root,
+    text="About Project",
+    font=("Arial", 10, "bold"),
+    command=show_about
+)
+
+about_button.place(x=760, y=20)
 
 root.mainloop()
