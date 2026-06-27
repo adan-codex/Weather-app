@@ -4,6 +4,7 @@ from tkinter import ttk,messagebox
 from datetime import datetime
 from datetime import datetime
 import requests
+from history import save_history, show_history
 
 
 root = Tk()
@@ -36,7 +37,15 @@ def getWeather():
     humidity = float(json_data["current"]["humidity"])
     pressure = float(json_data["current"]["pressure_in"])
     condition = json_data["current"]["condition"]["text"]
+    save_history(
+    city,
+    temp,
+    condition,
+    time_only
+    )
+    
     rain = json_data["current"]["chance_of_rain"]
+
     
     
     t.config(text=f"{temp}°")
@@ -109,5 +118,13 @@ r.place(x=430, y= 430)
 
 p = Label(text="...", font=("arial", 20, "bold"), bg="#1ab5ef")
 p.place(x=650, y= 430)
+history_button = Button(
+    root,
+    text="View History",
+    font=("Arial", 10, "bold"),
+    command=show_history
+)
+
+history_button.place(x=760, y=60)
 
 root.mainloop()
